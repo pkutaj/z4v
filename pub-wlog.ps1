@@ -73,28 +73,8 @@ function pub-wlog {
         If (Read-Host "Publish to Medium? (y/Enter)") { pub-medium $docName $docPath } 
         If (Read-Host "Modify mediaList? (y/Enter)") { Invoke-Item $mediaList }
         If (Read-Host "Modify CV? (y/Enter)") { Invoke-Item $cv }
-        if ($docName -match "\d\d\.\d\d") {
-            $newName = $docName -replace "\d\d.\d\d", $today
-            Rename-Item $docname, $newName
-        }
-        
-    <#     try {
-            ($text | 
-                Select-String $r -AllMatches).Matches.Value |
-                ForEach-Object { Copy-Item $_ $wlogAssets -Verbose -Force }
-        }
- 
-        catch {
-            Write-Host "~~~ No images found ~~~" -ForegroundColor DarkMagenta
-        }
-        
-        (Get-Content $docPath).replace($replace, $replaceWith) |
-            Set-Content $wlogPath
-         #>
-            
         pushd $wlogFolder
         pub-git -wlogPath $wlogPath -docName $docName
-        
     }
     
     end {
