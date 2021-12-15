@@ -102,7 +102,7 @@ function New-Kba {
         $today = Get-Date -Format "yyyy-MM-dd"
         $invalidCharacters = "[^-A-Za-z0-9_\.]"
         $filename = ("$name" -replace $invalidCharacters, "-") -replace ".+", "$&.md"
-        $t = "c:\Users\Admin\Documents\workspace\work.log\kb\personalKBTemplate.md"
+        $t = "${env:Z4V_FOLDER}\page_template.md"
         
     }
     process {

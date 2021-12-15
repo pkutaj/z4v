@@ -7,9 +7,10 @@
 
 The aim of this code🎯 is to describe my process for the establishment of Zettelkasten method within Visual Studio Code using git and a few PowerShell scripts for:
 
-* page creator 
-* link updater
-* link creator
+* [page creator](./new-kba.ps1) 
+* [page publisher](./pub-wlog.ps1)
+* [link updater: rename and relink](./rr.ps1)
+* [link creator](./new-kba.ps1)
 
 * The important difference to the usual Zettelkasten method is the implementation of dynamic linking.
      - Links are just filenames with timestamps - both of which I can modify easily
@@ -25,9 +26,9 @@ The aim of this code🎯 is to describe my process for the establishment of Zett
 #### 2.2. environmental variables
 * you need the following envirnomental variables
 
-Name | Example Value
------|--------------
-     |
+Name         | Example Value
+-------------|---------------------
+`Z4V_FOLDER` | `C:\Users\Admin\z4v`
 
 ### 3. instructions
 
