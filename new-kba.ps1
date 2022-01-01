@@ -67,7 +67,7 @@ function new-slog {
     #gitPush
     if ($extract) { insert-extractedConcept -insertUsecase $extract }
     if ($url) {(Get-Content $destination) -replace "### 2. links", "$&`n* $url" | Set-Content $destination}
-    if (!$silent) { Invoke-Item $destination }
+    if ($open?) { Invoke-Item $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
@@ -83,7 +83,7 @@ function new-wlog {
     gitPush
     if ($extract) { insert-extractedConcept -insertSteps $extract }
     if ($url) {(Get-Content $destination) -replace "### 2. links", "$&`n* $url" | Set-Content $destination}
-    if (!$silent) { Invoke-Item $destination }
+    if ($open?) { Invoke-Item $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
@@ -93,7 +93,7 @@ function New-Kba {
         [Parameter(Mandatory = $true)][string]$kbType,
         [Parameter(Mandatory = $true)][string]$name,
         [Parameter(Mandatory = $true)][string]$cat,
-        [Parameter(Mandatory = $false)][switch]$silent,
+        [Parameter(Mandatory = $true)][bool]$open?,
         [Parameter(Mandatory = $false)][string]$extract,
         [Parameter(Mandatory = $false)][string]$url
     )
