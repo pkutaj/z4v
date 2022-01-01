@@ -4,13 +4,9 @@ function transform-for-medium($tempDoc) {
 }
 
 function pub-git {
-    param(
-        [string]$wlogPath, 
-        [string]$docName)
-    git add $wlogPath
-    git add "..\assets"
-    git add "..\"
-    git commit -a -m "$docName"
+    git add "."
+    git add ".\assets"
+    git commit -a -m $today
     git push
     Write-Host "~~~ the result of the git push ~~~" -ForegroundColor cyan
     git log --pretty=format:"%h%x09%an%x09%ad%x09%s" --name-status --date=short -1 
@@ -59,22 +55,22 @@ function pub-wlog {
         if ($docFileName -match "\d\d\.\d\d") {Rename-Item $docPath $docName}
         $pubMediumScript = $env:md2med_SCRIPT
         $mediaList = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\playlist.md"
-        $wlogFolder = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\_posts\"    
+        $wlogFolder = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\"    
         $cv = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\index.markdown"
+        $cv_pdf = "c:\Users\Admin\Documents\familia\doklady\40-49 mrp\${today}-Pavol-Kutaj-Resume.pdf"
         $wlogPath = "$wlogFolder\$docName"
-        $wlogAssets = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\assets\"
-        $replace = "../assets/"
-        $replaceWith = "{{ site.url }}/assets/"
-        $text = gc $docPath -raw 
-        $r = "\.\.\/assets\/img.*(?=\))" #lookahead to match all until ')'
+        
     }
     
     process {
         If (Read-Host "Publish to Medium? (y/Enter)") { pub-medium $docName $docPath } 
         If (Read-Host "Modify mediaList? (y/Enter)") { Invoke-Item $mediaList }
-        If (Read-Host "Modify CV? (y/Enter)") { Invoke-Item $cv }
+        If (Read-Host "Modify CV? (y/Enter)") { 
+            Invoke-Item $cv 
+            Pause
+            create-pdf-from-md -source_file $cv -target_file $cv_pdf}
         pushd $wlogFolder
-        pub-git -wlogPath $wlogPath -docName $docName
+        pub-git
     }
     
     end {
