@@ -57,7 +57,7 @@ function pub-wlog {
         $mediaList = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\playlist.md"
         $wlogFolder = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\"    
         $cv = "c:\Users\Admin\Documents\workspace\work.log\pkutaj\index.markdown"
-        $cv_pdf = "c:\Users\Admin\Documents\familia\doklady\40-49 mrp\${today}-Pavol-Kutaj-Resume.pdf"
+        $cv_pdf = "c:\Users\Admin\Documents\familia\doklady\40-49 mrp\Pavol-Kutaj-Resume.pdf"
         $wlogPath = "$wlogFolder\$docName"
         
     }
