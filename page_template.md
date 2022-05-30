@@ -1,19 +1,19 @@
-## pomodoro-block-planning
+## POMODORO-BLOCK-PLANNING
 
-TOTAL      | <date>
------------|-------
-<estimate> |
+SUM | <date>
+----|-------
+    | 1
 
-## usecase
+## USECASE
 The aim of this page📝 is
 
 <!-- TOC -->
 
-- [1. notes](#1-notes)
-- [2. links](#2-links)
+- [1. NOTES](#1-notes)
+- [2. LINKS](#2-links)
 
 <!-- /TOC -->
 
-### 1. notes
+### 1. NOTES
  
-### 2. links
+### 2. LINKS

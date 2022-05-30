@@ -1,8 +1,8 @@
 function get-Locations ([string]$filename, [string]$link, [string]$githubURL, [switch]$slog, [switch]$kb) {
     if ($slog) {
-        $filename = Split-Path $filename -Leaf
+        #$filename = Split-Path $filename -Leaf
         $githubURL = "https://github.com/pkutaj/slog/blob/master/_posts/$filename"
-        $link = ".\$filename"
+        $link = "file:\\${filename}"
     }
     if ($kb) {
         $cat = Split-Path -Leaf (Split-Path $filename -Parent)
@@ -56,8 +56,6 @@ function new-slog {
     param (
         [string]$genre
     )
-    $t = (Get-Content -path $t -Raw) -replace "<date>", $today.Substring(5)
-    $t = $t -replace "<estimate>", $genre[0]
     $genre = $genre.ToUpper()
     $kb = "C:\Users\Admin\Documents\workspace\SNOW\SNOW-logs\_posts" 
     $destination = "$kb\$today-$genre-$filename"
@@ -76,7 +74,7 @@ function new-wlog {
     $destination = "$kb\$cat\$today-$filename"
     $githubURL = "https://github.com/pkutaj/kb/blob/master/$cat/$today-$filename"
     $link = "..\$cat\$today-$filename"
-    Get-Content $t | Set-Content $destination
+    Set-Content $t -Path $destination
     (Get-Content $destination) -replace "title:", "$& $name" | Set-Content $destination
     (Get-Content $destination) -replace "categories:", "$& [$cat]" | Set-Content $destination
     Write-Host "[~~~ new doc ~~~]" -ForegroundColor Cyan
@@ -94,15 +92,16 @@ function New-Kba {
         [Parameter(Mandatory = $true)][string]$name,
         [Parameter(Mandatory = $true)][string]$cat,
         [Parameter(Mandatory = $true)][bool]$open?,
-        [Parameter(Mandatory = $false)][string]$extract,
-        [Parameter(Mandatory = $false)][string]$url
+        [Parameter(Mandatory = $true)]$url,
+        [Parameter(Mandatory = $false)][string]$extract
     )
 
     begin {
         $today = Get-Date -Format "yyyy-MM-dd"
         $invalidCharacters = "[^-A-Za-z0-9_\.]"
-        $filename = ("$name" -replace $invalidCharacters, "-") -replace ".+", "$&.md"
+        $filename = (("$name" -replace " - Jira", "") -replace $invalidCharacters, "-") -replace ".+", "$&.md"
         $t = "${env:Z4V_FOLDER}\page_template.md"
+        $t = (Get-Content -path $t -Raw) -replace "<date>", $today.Substring(5)
         
     }
     process {

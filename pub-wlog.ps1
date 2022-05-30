@@ -37,7 +37,7 @@ function pub-medium ($docName, $docPath) {
     Remove-Item $arg1
     Remove-Item $tempDoc
     popd
-    start chrome "https://pavolkutaj.medium.com"
+    start firefox "https://pavolkutaj.medium.com"
 }
 
 function pub-wlog {
@@ -68,7 +68,8 @@ function pub-wlog {
         If (Read-Host "Modify CV? (y/Enter)") { 
             Invoke-Item $cv 
             Pause
-            create-pdf-from-md -source_file $cv -target_file $cv_pdf}
+            create-pdf-from-md -source_file $cv -target_file $cv_pdf
+            Copy-Item -Path $cv_pdf -Destination "${wlogFolder}\assets"}
         pushd $wlogFolder
         pub-git
     }
