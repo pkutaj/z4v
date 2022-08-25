@@ -93,7 +93,7 @@ function New-Kba {
         [Parameter(Mandatory = $true)][string]$cat,
         [Parameter(Mandatory = $true)][bool]$open?,
         [Parameter(Mandatory = $true)]$url,
-        [Parameter(Mandatory = $false)][string]$extract
+        [Parameter(Mandatory = $true)]$extract
     )
 
     begin {

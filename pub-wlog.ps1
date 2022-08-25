@@ -16,8 +16,8 @@ function pub-git {
 function pub-medium ($docName, $docPath) {
     $docFolder = Split-Path $docPath -Parent
     $TextInfo = (Get-Culture).TextInfo
-    $docTitle = ((($docName -replace "\d", "") -replace "-", " ") -replace "\.md", "") -replace "\s{2,}", ""
-    $docTitle = $TextInfo.ToTitleCase($docTitle)
+    # $docTitle = ((($docName -replace "\d", "") -replace "-", " ") -replace "\.md", "") -replace "\s{2,}", ""
+    # $docTitle = $TextInfo.ToTitleCase($docTitle)
     $docKbFolder = Split-Path -Leaf (Split-Path $docPath -Parent)
     $tempDoc = "temp_$docName"
     $tempDocPath = "$docFolder\\$tempDoc"
@@ -29,10 +29,10 @@ function pub-medium ($docName, $docPath) {
     Copy-Item -Path $docName -Destination $tempDoc
     transform-for-medium($tempDoc)
     $arg1 = "$docFolder\md2med.py"
-    $arg2 = "--doc_name=$docTitle" 
+    # $arg2 = "--doc_name=$docTitle" 
     $arg3 = "--file_to_publish=$tempDocPath"
     $arg4 = "--tag=$docKbFolder"
-    python $arg1 $arg2 $arg3 $arg4
+    python $arg1 $arg3 $arg4
     Remove-Item "./cacert.pem" -Force
     Remove-Item $arg1
     Remove-Item $tempDoc

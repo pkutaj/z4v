@@ -1,9 +1,3 @@
-## POMODORO-BLOCK-PLANNING
-
-SUM | <date>
-----|-------
-    | 1
-
 ## USECASE
 The aim of this page📝 is
 
