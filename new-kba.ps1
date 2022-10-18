@@ -41,7 +41,7 @@ function insert-extractedConcept([string]$insertUsecase, [string]$insertSteps) {
         (Get-Content -Path $destination -Raw) -replace $findUsecase, $insertUsecase | Set-Content $destination
     }
     if ($insertSteps) {
-        $findSteps = "### 1. notes"
+        $findSteps = "### >"
         $insertSteps = "$&`n$insertSteps`n"
         $template = (Get-Content -Path $destination -Raw)
         if(-not(Select-String $findSteps -inputObject $template)) {
@@ -64,7 +64,7 @@ function new-slog {
     Set-Content $t -Path $destination
     #gitPush
     if ($extract) { insert-extractedConcept -insertUsecase $extract }
-    if ($url) {(Get-Content $destination) -replace "### 2. links", "$&`n* $url" | Set-Content $destination}
+    if ($url) {(Get-Content $destination) -replace "### LINKS", "$&`n* $url" | Set-Content $destination}
     if ($open?) { Invoke-Item $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
@@ -80,7 +80,7 @@ function new-wlog {
     Write-Host "[~~~ new doc ~~~]" -ForegroundColor Cyan
     gitPush
     if ($extract) { insert-extractedConcept -insertSteps $extract }
-    if ($url) {(Get-Content $destination) -replace "### 2. links", "$&`n* $url" | Set-Content $destination}
+    if ($url) {(Get-Content $destination) -replace "### LINKS", "$&`n* $url" | Set-Content $destination}
     if ($open?) { Invoke-Item $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
