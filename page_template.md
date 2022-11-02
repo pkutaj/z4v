@@ -3,8 +3,8 @@ The aim of this page📝 is
 
 <!-- TOC -->
 
-- [1. NOTES](#1-notes)
-- [2. LINKS](#2-links)
+- [LINKS](#links)
+- [>](#)
 
 <!-- /TOC -->
 
