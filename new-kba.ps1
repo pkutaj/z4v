@@ -58,9 +58,10 @@ function new-slog {
     )
     $genre = $genre.ToUpper()
     $kb = "C:\Users\Admin\Documents\workspace\SNOW\SNOW-logs\_posts" 
-    $destination = "$kb\$today-$genre-$filename"
-    $githubURL = "https://github.com/pkutaj/slog/blob/master/_posts/$today-$genre-$filename"
-    $link = ".\$today-$genre-$filename"
+    $full_slog_name = "$genre-$points-$today-$filename"
+    $destination = "$kb\$full_slog_name"
+    $githubURL = "https://github.com/pkutaj/slog/blob/master/_posts/$full_slog_name"
+    $link = ".\$full_slog_name"
     Set-Content $t -Path $destination
     #gitPush
     if ($extract) { insert-extractedConcept -insertUsecase $extract }
