@@ -31,6 +31,9 @@ function get-Locations ([string]$filename, [string]$link, [string]$githubURL, [s
 
 function gitPush() {
     cd $kb
+    $FileStream = [System.IO.File]::Open("${destination}",'Open','Write')
+    $FileStream.Close()
+    $FileStream.Dispose()    
     git add $destination && git commit -m "$destination" && git push
 }
 
@@ -63,10 +66,10 @@ function new-slog {
     $githubURL = "https://github.com/pkutaj/slog/blob/master/_posts/$full_slog_name"
     $link = ".\$full_slog_name"
     Set-Content $t -Path $destination
-    #gitPush
+    # gitPush
     if ($extract) { insert-extractedConcept -insertUsecase $extract }
-    if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination}
-    if ($open?) { Invoke-Item $destination }
+    if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n$url" | Set-Content $destination}
+    if ($open?) { hx $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
@@ -79,10 +82,10 @@ function new-wlog {
     (Get-Content $destination) -replace "title:", "$& $name" | Set-Content $destination
     (Get-Content $destination) -replace "categories:", "$& [$cat]" | Set-Content $destination
     Write-Host "[~~~ new doc ~~~]" -ForegroundColor Cyan
-    gitPush
     if ($extract) { insert-extractedConcept -insertSteps $extract }
     if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination}
-    if ($open?) { Invoke-Item $destination }
+    if ($open?) { hx $destination }
+    gitPushG
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
