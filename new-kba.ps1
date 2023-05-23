@@ -34,7 +34,9 @@ function gitPush() {
     $FileStream = [System.IO.File]::Open("${destination}",'Open','Write')
     $FileStream.Close()
     $FileStream.Dispose()    
-    git add $destination && git commit -m "$destination" && git push
+    git add $destination 
+    git ls-files --deleted | % {git add $_}
+    git commit -m "$destination" && git push
 }
 
 function insert-extractedConcept([string]$insertUsecase, [string]$insertSteps) {
@@ -85,7 +87,7 @@ function new-wlog {
     if ($extract) { insert-extractedConcept -insertSteps $extract }
     if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination}
     if ($open?) { hx $destination }
-    gitPushG
+    gitPush
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
