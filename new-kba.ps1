@@ -71,7 +71,7 @@ function new-slog {
     # gitPush
     if ($extract) { insert-extractedConcept -insertUsecase $extract }
     if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n$url" | Set-Content $destination}
-    if ($open?) { hx $destination }
+    if ($open?) { code $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
 
@@ -86,7 +86,7 @@ function new-wlog {
     Write-Host "[~~~ new doc ~~~]" -ForegroundColor Cyan
     if ($extract) { insert-extractedConcept -insertSteps $extract }
     if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination}
-    if ($open?) { hx $destination }
+    if ($open?) { code $destination }
     gitPush
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
