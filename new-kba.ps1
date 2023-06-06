@@ -31,30 +31,23 @@ function get-Locations ([string]$filename, [string]$link, [string]$githubURL, [s
 
 function gitPush() {
     cd $kb
-    $FileStream = [System.IO.File]::Open("${destination}",'Open','Write')
+    $FileStream = [System.IO.File]::Open("${destination}", 'Open', 'Write')
     $FileStream.Close()
     $FileStream.Dispose()    
     git add $destination 
-    git ls-files --deleted | % {git add $_}
+    git ls-files --deleted | % { git add $_ }
     git commit -m "$destination" && git push
 }
 
-function insert-extractedConcept([string]$insertUsecase, [string]$insertSteps) {
-    if ($insertUsecase) {
-        $findUsecase = "The aim(.*\n)+?(?=<)"
-        $insertUsecase += "`n`n"
-        (Get-Content -Path $destination -Raw) -replace $findUsecase, $insertUsecase | Set-Content $destination
+function insert-extractedConcept([string]$insertSteps) {   
+    $findSteps = "### >"
+    $insertSteps = "$&`n$insertSteps"
+    $template = (Get-Content -Path $destination -Raw)
+    if (-not(Select-String $findSteps -InputObject $template)) {
+        Write-Host $template
+        throw "Cannot Extract Concepts - Dwarves believe you changed the docTemplate"
     }
-    if ($insertSteps) {
-        $findSteps = "### >"
-        $insertSteps = "$&`n$insertSteps`n"
-        $template = (Get-Content -Path $destination -Raw)
-        if(-not(Select-String $findSteps -inputObject $template)) {
-            write-host $template
-            throw "Cannot Extract Concepts - Dwarves believe you changed the docTemplate"
-        }
-        $template -replace $findSteps, $insertSteps | Set-Content $destination
-    }
+    $template -replace $findSteps, $insertSteps | Set-Content $destination
 }
 
 function new-slog {
@@ -69,8 +62,8 @@ function new-slog {
     $link = ".\$full_slog_name"
     Set-Content $t -Path $destination
     # gitPush
-    if ($extract) { insert-extractedConcept -insertUsecase $extract }
-    if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n$url" | Set-Content $destination}
+    if ($extract) { insert-extractedConcept -insertSteps $extract }
+    if ($url) { (Get-Content $destination) -replace "## LINKS", "$&`n$url" | Set-Content $destination }
     if ($open?) { code $destination }
     get-Locations -filename $filename -link $link -githubURL $githubURL
 }
@@ -85,7 +78,7 @@ function new-wlog {
     (Get-Content $destination) -replace "categories:", "$& [$cat]" | Set-Content $destination
     Write-Host "[~~~ new doc ~~~]" -ForegroundColor Cyan
     if ($extract) { insert-extractedConcept -insertSteps $extract }
-    if ($url) {(Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination}
+    if ($url) { (Get-Content $destination) -replace "## LINKS", "$&`n* $url" | Set-Content $destination }
     if ($open?) { code $destination }
     gitPush
     get-Locations -filename $filename -link $link -githubURL $githubURL
@@ -107,7 +100,7 @@ function New-Kba {
         $invalidCharacters = "[^-A-Za-z0-9_\.]"
         $filename = (("$name" -replace " - Jira", "") -replace $invalidCharacters, "-") -replace ".+", "$&.md"
         $t = "${env:Z4V_FOLDER}\page_template.md"
-        $t = (Get-Content -path $t -Raw) -replace "<date>", $today.Substring(5)
+        $t = (Get-Content -Path $t -Raw) -replace "<date>", $today.Substring(5)
         
     }
     process {
@@ -143,3 +136,5 @@ function New-Kba {
     
 #>
 }
+
+New-Kba
