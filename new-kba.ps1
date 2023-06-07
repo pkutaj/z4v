@@ -136,5 +136,3 @@ function New-Kba {
     
 #>
 }
-
-New-Kba
