@@ -40,7 +40,7 @@ function gitPush() {
 }
 
 function insert-extractedConcept([string]$insertSteps) {   
-    $findSteps = "### >"
+    $findSteps = ">"
     $insertSteps = "$&`n$insertSteps"
     $template = (Get-Content -Path $destination -Raw)
     if (-not(Select-String $findSteps -InputObject $template)) {
