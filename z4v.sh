@@ -32,7 +32,7 @@ make_z4v() {
 
     if [ -n "$extract" ]; then echo "- [ ] $extract" >>"$destination"; fi
     if [ -n "$url" ]; then echo -e "$url\n\n$(cat "$destination")" >"$destination"; fi
-    if [ "$open" = "y" ]; then code "$destination"; fi
+    if [ "$open" = "y" ]; then vim "$destination"; fi
 
 }
 
@@ -40,6 +40,6 @@ gitPush() {
     repo_path=$1
     cd "$repo_path" || return
     git add "$destination"
-    git ls-files --deleted | xargs -I {} git add "{}"
+    commit_deleted
     git commit -m "$destination" && git push
 }
