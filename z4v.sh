@@ -21,6 +21,7 @@ make_z4v() {
         ;;
     "s")
         filename=$(echo "$name" | sed -e "s/ - Jira//" -e "s/$invalidCharacters/-/g" -e "s/.*/&.md/")
+        category=$(echo "${category}" | sed -e "s/${invalidCharacters}/-/g")
         filename="${category}-${today}-${filename}"
         destination="${SLOG_PATH}/${filename}"
         repo="${SLOG_PATH}"
