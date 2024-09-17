@@ -6,7 +6,7 @@ make_z4v() {
     category="${4:-$(read -p "Category: " category && echo "$category")}"
     open="${5:-$(read -p "Open: " open && echo "$open")}"
     url="${6:-$(read -p "URL: " url && echo "$url")}"
-    read -p "Add to backlog? (y/N): " backlog
+    # read -p "Add to backlog? (y/N): " backlog
 
     today=$(date +"%Y-%m-%d")
     invalidCharacters="[^-A-Za-z0-9_\.]"
@@ -35,7 +35,7 @@ make_z4v() {
     if [ -n "$extract" ]; then echo "- [ ] $extract" >>"$destination"; else echo "- [ ] " >>"$destination"; fi
     if [ -n "$url" ]; then echo -e "$url\n\n$(cat "$destination")" >"$destination"; fi
     if [ "$open" = "y" ]; then vim "$destination"; fi
-    if [[ "$backlog" = "y" ]]; then bck "$destination"; fi
+    # if [[ "$backlog" = "y" ]]; then bck "$destination"; fi
 
 }
 
